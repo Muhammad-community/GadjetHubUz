@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Narxlar – GadgetHub{% endblock %}
+
+{% block content %}
+<section style="padding: 80px 0;">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <span class="section-label">Tarif rejalar</span>
+      <h1 class="mt-2">Siz uchun mos reja tanlang</h1>
+      <p style="color:var(--muted);max-width:480px;margin:0 auto;">
+        Har qanday ehtiyoj uchun moslashtirilgan tarif rejalari. Istalgan paytda o'zgartirish mumkin.
+      </p>
+    </div>
+
+    <!-- Plans -->
+    <div class="row g-4 justify-content-center">
+      {% for plan in plans %}
+      <div class="col-md-4 fade-up" style="animation-delay:{{ loop.index0 * 0.1 }}s;">
+        <div class="card-dark h-100 p-5 d-flex flex-column text-center position-relative
+                    {% if plan.get('popular') %}{% endif %}"
+             style="{% if plan.get('popular') %}border-color:var(--accent);box-shadow:0 0 40px rgba(0,212,255,0.15);{% endif %}">
+
+          <!-- Popular badge -->
+          {% if plan.get('popular') %}
+          <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);">
+            <span class="badge-accent" style="font-size:0.75rem;padding:5px 14px;">⭐ Eng Mashhur</span>
+          </div>
+          {% endif %}
+
+          <!-- Plan name & price -->
+          <h3 class="mb-1">{{ plan.name }}</h3>
+          <div style="margin:20px 0;">
+            <span style="font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;
+                         {% if plan.get('popular') %}color:var(--accent);{% endif %}">
+              {% if plan.price == 0 %}Bepul
+              {% else %}{{ "{:,.0f}".format(plan.price) }} so'm
+              {% endif %}
+            </span>
+            {% if plan.price > 0 %}<span style="color:var(--muted);font-size:0.9rem;"> / oy</span>{% endif %}
+          </div>
+
+          <div class="grad-divider"></div>
+
+          <!-- Features -->
+          <ul class="list-unstyled text-start d-flex flex-column gap-2 my-4 flex-grow-1">
+            {% for feature in plan.features %}
+            <li class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill" style="color:var(--success);flex-shrink:0;"></i>
+              <span style="color:var(--muted);">{{ feature }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <!-- CTA -->
+          {% if plan.get('popular') %}
+          <a href="{{ url_for('register') }}" class="btn-accent btn btn-lg">Boshlash</a>
+          {% else %}
+          <a href="{{ url_for('register') }}" class="btn-outline-accent btn btn-lg">Boshlash</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- FAQ minimal -->
+    <div class="mt-5 pt-3 fade-up delay-3" style="max-width:680px;margin:0 auto;">
+      <h3 class="text-center mb-4">Ko'p so'raladigan savollar</h3>
+      {% set faqs = [
+        ("Reja o'zgartirsam ma'lumotlarim saqlanadimi?","Ha, barcha ma'lumotlaringiz xavfsiz saqlanadi va reja o'zgartirish ta'sir qilmaydi."),
+        ("Bekor qilish imkoni bormi?","Albatta. Istalgan vaqtda obunani bekor qilishingiz mumkin."),
+        ("To'lov qanday amalga oshiriladi?","Click, Payme yoki bank kartasi orqali to'lash mumkin."),
+      ] %}
+      <div class="d-flex flex-column gap-3">
+        {% for q, a in faqs %}
+        <div class="card-dark p-4">
+          <div style="font-weight:600;margin-bottom:8px;">{{ q }}</div>
+          <div style="color:var(--muted);font-size:0.9rem;">{{ a }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

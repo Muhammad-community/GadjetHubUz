@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Ro'yxatdan o'tish – GadgetHub{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; padding: 40px 0;">
+  <div class="card-dark p-5 fade-up" style="width:100%;max-width:460px;">
+
+    <div class="text-center mb-4">
+      <div class="brand fs-2 mb-1">⚡ GadgetHub</div>
+      <h2 class="mt-2 mb-1" style="font-size:1.6rem;">Ro'yxatdan o'tish</h2>
+      <p style="color:var(--muted);font-size:0.9rem;">Akkaunt yarating va boshlang</p>
+    </div>
+
+    <form action="{{ url_for('register') }}" method="POST" class="d-flex flex-column gap-3">
+
+      <!-- Username -->
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Foydalanuvchi nomi</label>
+        <input type="text" name="username" class="form-dark"
+               placeholder="johndoe" required minlength="3" maxlength="50" />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Email manzil</label>
+        <input type="email" name="email" class="form-dark"
+               placeholder="siz@email.com" required />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Parol</label>
+        <input type="password" name="password" class="form-dark"
+               placeholder="Kamida 6 ta belgi" required minlength="6" />
+      </div>
+
+      <!-- Confirm password -->
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Parolni tasdiqlang</label>
+        <input type="password" name="confirm_password" class="form-dark"
+               placeholder="Parolni qaytaring" required />
+      </div>
+
+      <button type="submit" class="btn-accent btn btn-lg mt-2">
+        Ro'yxatdan o'tish
+      </button>
+    </form>
+
+    <div class="grad-divider mt-4"></div>
+    <p class="text-center mb-0" style="color:var(--muted);font-size:0.88rem;">
+      Allaqachon akkauntingiz bormi?
+      <a href="{{ url_for('login') }}" style="color:var(--accent);text-decoration:none;">Tizimga kiring</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Kirish – GadgetHub{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; padding: 40px 0;">
+  <div class="card-dark p-5 fade-up" style="width:100%;max-width:420px;">
+
+    <div class="text-center mb-4">
+      <div class="brand fs-2 mb-1">⚡ GadgetHub</div>
+      <h2 class="mt-2 mb-1" style="font-size:1.6rem;">Tizimga kirish</h2>
+      <p style="color:var(--muted);font-size:0.9rem;">Akkauntingizga xush kelibsiz</p>
+    </div>
+
+    <form action="{{ url_for('login') }}" method="POST" class="d-flex flex-column gap-3">
+
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Email manzil</label>
+        <input type="email" name="email" class="form-dark"
+               placeholder="siz@email.com" required />
+      </div>
+
+      <div>
+        <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Parol</label>
+        <input type="password" name="password" class="form-dark"
+               placeholder="Parolingiz" required />
+      </div>
+
+      <button type="submit" class="btn-accent btn btn-lg mt-2">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Kirish
+      </button>
+    </form>
+
+    <div class="grad-divider mt-4"></div>
+    <p class="text-center mb-0" style="color:var(--muted);font-size:0.88rem;">
+      Akkauntingiz yo'qmi?
+      <a href="{{ url_for('register') }}" style="color:var(--accent);text-decoration:none;">Ro'yxatdan o'ting</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

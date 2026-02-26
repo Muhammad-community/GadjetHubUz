@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}Bozor – GadgetHub{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 60px 0;">
+
+  <!-- Header -->
+  <div class="d-flex align-items-start justify-content-between flex-wrap gap-3 mb-5 fade-up">
+    <div>
+      <span class="section-label">Bozor</span>
+      <h1 class="mt-1">Sotib oling yoki soting</h1>
+      <p style="color:var(--muted);">Foydalanuvchilar e'lonlari – real vaqt rejimida.</p>
+    </div>
+    <!-- Filter badges (static, UX decoration) -->
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <span style="padding:6px 14px;border-radius:99px;background:var(--surface2);
+                   border:1px solid var(--border);font-size:0.82rem;color:var(--text);">Barchasi</span>
+      <span style="padding:6px 14px;border-radius:99px;background:rgba(0,229,160,0.1);
+                   border:1px solid rgba(0,229,160,0.3);font-size:0.82rem;color:var(--success);">Sotuv</span>
+      <span style="padding:6px 14px;border-radius:99px;background:rgba(0,212,255,0.1);
+                   border:1px solid rgba(0,212,255,0.3);font-size:0.82rem;color:var(--accent);">Xarid</span>
+    </div>
+  </div>
+
+  <div class="row g-5">
+
+    <!-- Listings column -->
+    <div class="col-lg-7 fade-up delay-1">
+      {% if listings %}
+        <div class="d-flex flex-column gap-3">
+          {% for listing in listings %}
+          <div class="card-dark p-4">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+
+              <div style="flex:1;">
+                <!-- Type badge -->
+                <span style="font-size:0.75rem;font-weight:700;padding:3px 10px;border-radius:6px;
+                             {% if listing['listing_type'] == 'sell' %}
+                               background:rgba(0,229,160,0.12);color:var(--success);border:1px solid rgba(0,229,160,0.3);
+                             {% else %}
+                               background:rgba(0,212,255,0.12);color:var(--accent);border:1px solid rgba(0,212,255,0.3);
+                             {% endif %}">
+                  {% if listing['listing_type'] == 'sell' %}📤 Sotuv{% else %}📥 Xarid{% endif %}
+                </span>
+
+                <h5 class="mt-2 mb-1" style="font-size:1rem;">{{ listing['title'] }}</h5>
+
+                {% if listing['description'] %}
+                <p style="color:var(--muted);font-size:0.88rem;margin-bottom:8px;">{{ listing['description'] }}</p>
+                {% endif %}
+
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                  <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--accent);">
+                    {{ "{:,.0f}".format(listing['price']) }} so'm
+                  </span>
+                  <span style="color:var(--muted);font-size:0.8rem;">
+                    <i class="bi bi-person-circle me-1"></i>{{ listing['username'] }}
+                  </span>
+                  <span style="color:var(--muted);font-size:0.8rem;">
+                    <i class="bi bi-clock me-1"></i>{{ listing['created_at'][:10] }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Delete button (only for owner) -->
+              {% if user and user['id'] == listing['user_id'] %}
+              <form action="{{ url_for('delete_listing', listing_id=listing['id']) }}" method="POST">
+                <button type="submit"
+                        style="background:rgba(255,79,106,0.1);border:1px solid rgba(255,79,106,0.25);
+                               color:var(--danger);border-radius:8px;padding:6px 12px;cursor:pointer;"
+                        onclick="return confirm('E\'lonni o\'chirasizmi?')">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-5" style="color:var(--muted);">
+          <i class="bi bi-shop" style="font-size:3.5rem;opacity:0.25;"></i>
+          <p class="mt-3">Hali hech qanday e'lon yo'q. Birinchi bo'lib e'lon joylashtiring!</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- New listing form column -->
+    <div class="col-lg-5 fade-up delay-2">
+      <div class="card-dark p-4" style="position:sticky;top:90px;">
+        <h4 class="mb-4">
+          <i class="bi bi-plus-circle me-2" style="color:var(--accent);"></i>
+          Yangi e'lon joylash
+        </h4>
+        <form action="{{ url_for('marketplace') }}" method="POST" class="d-flex flex-column gap-3">
+
+          <div>
+            <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Sarlavha *</label>
+            <input type="text" name="title" class="form-dark"
+                   placeholder="Masalan: iPhone 14 Pro sotiladi" required maxlength="150" />
+          </div>
+
+          <div>
+            <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Tavsif</label>
+            <textarea name="description" class="form-dark" rows="3"
+                      placeholder="Holati, qo'shimcha ma'lumot..." style="resize:vertical;"></textarea>
+          </div>
+
+          <div>
+            <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Narx (so'm) *</label>
+            <input type="number" name="price" class="form-dark"
+                   placeholder="1000000" required min="0" step="1000" />
+          </div>
+
+          <div>
+            <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">E'lon turi *</label>
+            <select name="listing_type" class="form-dark">
+              <option value="sell">📤 Men sotaman</option>
+              <option value="buy">📥 Men sotib olaman</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-accent btn btn-lg mt-1">
+            <i class="bi bi-send me-2"></i>E'lon joylash
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Aloqa – GadgetHub{% endblock %}
+
+{% block content %}
+<section style="padding: 80px 0;">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <span class="section-label">Murojaat</span>
+      <h1 class="mt-2">Biz bilan bog'laning</h1>
+      <p style="color:var(--muted);max-width:500px;margin:0 auto;">
+        Savollar, takliflar yoki hamkorlik bo'yicha murojaat qiling.
+      </p>
+    </div>
+
+    <div class="row g-5 align-items-start">
+
+      <!-- Contact Info -->
+      <div class="col-md-5 fade-up delay-1">
+        <div class="d-flex flex-column gap-4">
+          {% set info = [
+            ("bi-geo-alt-fill","Manzilimiz","Toshkent sh., Yunusobod t., 17-uy"),
+            ("bi-telephone-fill","Telefon","+998 71 123 45 67"),
+            ("bi-envelope-fill","Email","info@gadgethub.uz"),
+            ("bi-clock-fill","Ish vaqti","Du–Ju: 09:00–18:00"),
+          ] %}
+          {% for icon, label, value in info %}
+          <div class="card-dark p-4 d-flex gap-3 align-items-center">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,212,255,0.1);
+                        display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i class="bi {{ icon }}" style="color:var(--accent);font-size:1.1rem;"></i>
+            </div>
+            <div>
+              <div style="color:var(--muted);font-size:0.8rem;margin-bottom:2px;">{{ label }}</div>
+              <div style="font-weight:500;">{{ value }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-md-7 fade-up delay-2">
+        <div class="card-dark p-5">
+          <h3 class="mb-4">Xabar yuborish</h3>
+          <form action="{{ url_for('contact') }}" method="POST" class="d-flex flex-column gap-3">
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Ismingiz</label>
+                <input type="text" name="name" class="form-dark" placeholder="Ism Familiya" required />
+              </div>
+              <div class="col-sm-6">
+                <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Email</label>
+                <input type="email" name="email" class="form-dark" placeholder="siz@email.com" required />
+              </div>
+            </div>
+            <div>
+              <label class="mb-1" style="font-size:0.85rem;color:var(--muted);">Xabaringiz</label>
+              <textarea name="message" class="form-dark" rows="5"
+                        placeholder="Savolingizni yozing..." required style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn-accent btn btn-lg">
+              <i class="bi bi-send-fill me-2"></i>Yuborish
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

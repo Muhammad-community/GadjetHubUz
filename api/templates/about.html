@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Biz Haqimizda – GadgetHub{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section style="padding: 90px 0 60px; text-align:center; position:relative; overflow:hidden;">
+  <div style="position:absolute;top:-80px;right:-100px;width:500px;height:500px;
+              background:radial-gradient(circle,rgba(108,99,255,0.12) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="container fade-up">
+    <span class="section-label">Kompaniyamiz</span>
+    <h1 class="mt-2 mb-4" style="font-size:clamp(2rem,4vw,3.2rem);">
+      Biz <span style="color:var(--accent)">GadgetHub</span> Haqida
+    </h1>
+    <p style="color:var(--muted);max-width:600px;margin:0 auto;font-size:1.05rem;line-height:1.8;">
+      2022-yilda tashkil etilgan GadgetHub — O'zbekistonda texnologiya mahsulotlarini
+      qulay va ishonchli tarzda xarid qilish va sotish imkoniyatini yaratadi.
+    </p>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section style="padding: 40px 0 60px;">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6 fade-up delay-1">
+        <div class="card-dark p-5 h-100">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(0,212,255,0.12);
+                      display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <i class="bi bi-lightning-charge-fill" style="color:var(--accent);font-size:1.4rem;"></i>
+          </div>
+          <h3 class="mb-3">Missiyamiz</h3>
+          <p style="color:var(--muted);line-height:1.8;">
+            Har bir o'zbekistonlikka eng so'nggi texnologiyalarni qulay narxda va
+            ishonchli xizmat bilan yetkazib berish. Texnologiya hammaga ochiq bo'lsin!
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6 fade-up delay-2">
+        <div class="card-dark p-5 h-100">
+          <div style="width:52px;height:52px;border-radius:14px;background:rgba(108,99,255,0.12);
+                      display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <i class="bi bi-eye-fill" style="color:var(--accent2);font-size:1.4rem;"></i>
+          </div>
+          <h3 class="mb-3">Vizyonimiz</h3>
+          <p style="color:var(--muted);line-height:1.8;">
+            Markaziy Osiyoning yetakchi gadjet bozori va texnologiya jamoasiga
+            aylanib, 2027-yilga qadar 100,000+ foydalanuvchiga xizmat qilish.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section style="padding: 40px 0 60px;">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <span class="section-label">Jamoa</span>
+      <h2 class="mt-2">Bizning jamoamiz</h2>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% set team = [
+        ("Amir Karimov", "Bosh Ijrochi Direktor", "https://i.pravatar.cc/150?img=11"),
+        ("Nilufar Rahimova", "Mahsulot Menejeri", "https://i.pravatar.cc/150?img=5"),
+        ("Bobur Toshmatov", "Bosh Dizayner", "https://i.pravatar.cc/150?img=15"),
+        ("Zulfiya Yusupova", "Marketing Rahbari", "https://i.pravatar.cc/150?img=9"),
+      ] %}
+      {% for name, role, img in team %}
+      <div class="col-sm-6 col-md-3 text-center fade-up" style="animation-delay:{{ loop.index0 * 0.1 }}s">
+        <div class="card-dark p-4 h-100">
+          <img src="{{ img }}" alt="{{ name }}"
+               style="width:80px;height:80px;border-radius:50%;object-fit:cover;
+                      border:2px solid var(--accent);margin:0 auto 14px;display:block;" />
+          <h5 class="mb-1" style="font-size:1rem;">{{ name }}</h5>
+          <span style="color:var(--muted);font-size:0.83rem;">{{ role }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}
