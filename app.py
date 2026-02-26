@@ -7,7 +7,7 @@ app = Flask(__name__)
 # Secret key for session management
 app.secret_key = os.urandom(24)
 
-DB_PATH = "database.db"
+DB_PATH = "/tmp/database.db"
 
 # ─── Database Setup ───────────────────────────────────────────────────────────
 
